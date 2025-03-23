@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.12
+    container_name: clickhouse-server
+    environment:
+      - CLICKHOUSE_DB=default
+      - CLICKHOUSE_USER=admin
+      - CLICKHOUSE_PASSWORD=password123
+    volumes:
+      - ./config/config.xml:/etc/clickhouse-server/config.xml
+      - ./config/user.xml:/etc/clickhouse-server/users.xml
+    ports:
+      - "9000:9000"  # ClickHouse 客戶端連接端口
+      - "8123:8123"  # HTTP 端口
+      - "9009:9009"  # 進行內部協議的端口
+    restart: always
